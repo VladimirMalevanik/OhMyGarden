@@ -56,10 +56,28 @@ const sceneSteps = [
 ];
 let sceneIndex = 0;
 
+function animateOnce(el, cls){
+  el.classList.remove(cls); // сброс, чтобы анимация переигрывалась
+  // принудительный reflow
+  // eslint-disable-next-line no-unused-expressions
+  el.offsetWidth;
+  el.classList.add(cls);
+}
+
 function renderSceneStep(){
   const step = sceneSteps[sceneIndex];
+
+  // текст — плавный поп-ин
   speechBubble.textContent = step.text;
+  animateOnce(speechBubble, "anim-in");
+
+  // смена изображения деда + анимация справа
   grandpaImg.src = step.img;
+  if (grandpaImg.complete) {
+    animateOnce(grandpaImg, "anim-in");
+  } else {
+    grandpaImg.onload = () => animateOnce(grandpaImg, "anim-in");
+  }
 }
 
 /* ===== init ===== */
@@ -93,10 +111,12 @@ function init(){
     activateSlide("slide-scene");
   });
 
-  // 5: клик — следующий шаг диалога/поза деда
+  // 5: клик — следующий шаг диалога/поза деда + анимации каждый раз
   slideScene.addEventListener("click", ()=>{
-    sceneIndex = Math.min(sceneIndex + 1, sceneSteps.length - 1);
-    renderSceneStep();
+    if (sceneIndex < sceneSteps.length - 1) {
+      sceneIndex += 1;
+      renderSceneStep();
+    }
   });
 
   // старт
