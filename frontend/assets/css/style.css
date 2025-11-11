@@ -69,20 +69,30 @@ body.no-blur .bg-blur{opacity:0}
 .scene{position:relative; width:100%; height:100%; display:block}
 body.scene-meadow .bg-image{background-image:url("../img/meadow-scene.jpg")}
 
-/* дед — ещё правее и крупнее (+10% от предыдущего положения) */
+/* дед — адаптивно правее, но не уходит за край; размер тоже адаптивный */
 .grandpa{
-  position:absolute; right:-4%; bottom:4%;
-  width:min(620px, 58vw); height:auto;
+  position:absolute;
+  right:clamp(12px, 6vw, 64px);     /* не липнет к краю и не уходит за экран */
+  bottom:clamp(12px, 4vh, 48px);
+  width:clamp(460px, 50vw, 680px);  /* растёт, но в разумных пределах */
+  height:auto;
   filter:drop-shadow(0 14px 40px rgba(0,0,0,.25));
   will-change: transform, opacity;
 }
 
-/* спич-бабл сверху по центру, шире и крупнее */
-.speech{position:absolute; top:6%; left:50%; transform:translateX(-50%); width:100%; display:grid; place-items:center}
+/* бабл сверху по центру, безопасные отступы */
+.speech{
+  position:absolute;
+  top: calc(clamp(12px, 5vh, 64px) + env(safe-area-inset-top, 0px));
+  left:50%; transform:translateX(-50%);
+  width:100%; display:grid; place-items:center; padding:0 16px;
+}
 .speech-bubble{
-  max-width:min(980px, 92vw);
-  background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:20px;
-  padding:18px 22px; font-weight:800; color:#2c3b20; font-size:clamp(18px,2.4vw,24px);
+  max-width:min(980px, 88vw);
+  background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:24px;
+  padding:18px 24px;
+  font-weight:800; color:#2c3b20;
+  font-size:clamp(18px, 2.1vw, 22px);  /* немного меньше верхняя граница */
   box-shadow:0 14px 40px rgba(0,0,0,.10);
   will-change: transform, opacity;
 }
@@ -96,7 +106,15 @@ body.scene-meadow .bg-image{background-image:url("../img/meadow-scene.jpg")}
   from { opacity:0; transform: translateX(10px) scale(.995); }
   to   { opacity:1; transform: translateX(0) scale(1); }
 }
-
-/* применяются на каждой смене реплики/картинки */
 .grandpa.anim-in { animation: popInRight .45s var(--ease-smooth) both; }
 .speech-bubble.anim-in { animation: popInUp .45s var(--ease-smooth) both; }
+
+/* ===== Респонсив-подстройки для низких экранов ===== */
+@media (max-height: 720px) {
+  .grandpa{ width:clamp(420px, 46vw, 620px); bottom:clamp(8px, 3vh, 32px) }
+  .speech-bubble{ font-size:clamp(16px, 2vw, 20px) }
+}
+@media (max-width: 900px) {
+  .grandpa{ right:clamp(8px, 4vw, 40px); width:clamp(360px, 58vw, 560px) }
+  .speech-bubble{ max-width:min(940px, 92vw) }
+}
