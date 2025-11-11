@@ -84,3 +84,4 @@ body{
 
 /* Без прокрутки на iOS */
 @supports (-webkit-touch-callout:none){body{height:100dvh}}
+
