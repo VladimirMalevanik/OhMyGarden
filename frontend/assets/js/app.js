@@ -1,15 +1,16 @@
 import { getTelegramUser } from "./telegram.js";
-// api.js подключён как заглушка — в тесте не используем
 
-const startBtn = document.getElementById("startBtn");
+const startBtn  = document.getElementById("startBtn");
 const goalsList = document.getElementById("goalsList");
-const addGoal = document.getElementById("addGoal");
-const nextBtn = document.getElementById("nextBtn");
-const giftBtn = document.getElementById("giftBtn");
+const addGoal   = document.getElementById("addGoal");
+const nextBtn   = document.getElementById("nextBtn");
+const giftBtn   = document.getElementById("giftBtn");
+
+const slideReveal = document.getElementById("slide-reveal");
+const slideScene  = document.getElementById("slide-scene");
 
 const tgUser = getTelegramUser();
-const tgId = tgUser?.id ? String(tgUser.id) : "guest";
-const TEST_MODE = true; // всегда позволяем пройти дальше
+const TEST_MODE = true;
 
 let goalCount = 1;
 
@@ -18,7 +19,6 @@ function activateSlide(idToShow) {
   document.getElementById(idToShow).classList.add("slide--active");
 }
 
-/* ===== Валидация формы ===== */
 function firstGoalFilled() {
   const first = goalsList.querySelector(".goal-input");
   return Boolean(first && first.value.trim().length > 0);
@@ -27,7 +27,6 @@ function updateContinueState() {
   nextBtn.disabled = !firstGoalFilled();
 }
 
-/* ===== Добавление полей (до 3) ===== */
 function addGoalRow() {
   if (goalCount >= 3) return;
   goalCount += 1;
@@ -44,10 +43,9 @@ function addGoalRow() {
   li.querySelector(".goal-input").addEventListener("input", updateContinueState);
 }
 
-/* ===== Инициализация ===== */
 function init() {
+  // 1 -> 2
   startBtn.addEventListener("click", () => {
-    // в тесте всегда идём дальше
     activateSlide("slide-goals");
     setTimeout(() => goalsList.querySelector(".goal-input")?.focus(), 30);
   });
@@ -55,19 +53,29 @@ function init() {
   goalsList.querySelector(".goal-input").addEventListener("input", updateContinueState);
   addGoal.addEventListener("click", addGoalRow);
 
+  // 2 -> 3
   nextBtn.addEventListener("click", () => {
-    if (!TEST_MODE && nextBtn.disabled) return;
-    if (nextBtn.disabled) return; // первая цель обязательна
+    if (nextBtn.disabled) return;
     activateSlide("slide-reward");
   });
 
+  // 3 -> 4 (по подарку)
   giftBtn.addEventListener("click", () => {
-    // сейчас только лёгкий фидбек; эффекты добавишь своим видео/PNG
-    giftBtn.classList.add("pulse");
-    setTimeout(() => giftBtn.classList.remove("pulse"), 400);
+    activateSlide("slide-reveal");
   });
 
-  // стартуем с приветствия
+  // 4 -> 5 (клик в любом месте: убираем блюр и меняем сцену)
+  slideReveal.addEventListener("click", () => {
+    document.body.classList.add("no-blur");     // снимаем размытие
+    document.body.classList.add("scene-meadow"); // меняем фон на поляну
+    activateSlide("slide-scene");
+  });
+
+  // 5 — всё кликабельно (можно потом добавить переход дальше)
+  slideScene.addEventListener("click", () => {
+    // место для следующего шага (например, переход в сам сад)
+  });
+
   activateSlide("slide-hello");
   updateContinueState();
 }

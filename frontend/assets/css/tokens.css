@@ -1,21 +1,17 @@
 :root{
-  /* зелёные */
   --forest-800:#2f4c24;
   --forest-700:#3f5d2f;
   --forest-600:#4e6b3a;
   --forest-500:#6e8f56;
   --forest-400:#8db372;
 
-  /* солнечные */
   --sun-500:#ffbf2f;
   --sun-400:#ffc94a;
   --sun-300:#ffd972;
 
-  /* коричневые (soil) */
   --soil-800:#6b4b2f;
   --soil-700:#7a5535;
 
-  /* карточка */
   --card:#f5fbea;
 
   --ink:#22311c;

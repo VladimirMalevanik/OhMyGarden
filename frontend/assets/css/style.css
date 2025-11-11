@@ -9,22 +9,20 @@ body{
   overflow:hidden;
 }
 
-/* ==== ФОН: чёткая картинка + верхний блюр ==== */
+/* ==== ФОН ==== */
 .bg{position:fixed; inset:0; z-index:0}
 .bg-image{
   position:absolute; inset:-8%;
   background: url("../img/hero-field.jpg") center/cover no-repeat;
-  filter: none;             /* картинка остаётся чёткой */
-  opacity: 1;
-  transform: scale(1.04);
+  filter: none; opacity: 1; transform: scale(1.04);
 }
-/* «30%» блюра по ощущениям — лёгкий слой поверх */
 .bg-blur{
   position:absolute; inset:0;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  background: rgba(255,255,255,0.10);  /* едва заметная вуаль */
+  background: rgba(255,255,255,0.10);
   pointer-events:none;
+  transition: opacity .5s var(--ease-smooth);
 }
 .bg-tint{
   position:absolute; inset:0;
@@ -33,13 +31,10 @@ body{
     radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.05), transparent 60%);
   pointer-events:none;
 }
+body.no-blur .bg-blur{opacity:0}
 
-/* ==== СЦЕНА/СЛАЙДЫ (по центру) ==== */
-.stage{
-  position:relative; height:100dvh; padding:24px;
-  display:grid; place-items:center;          /* строго по центру */
-  z-index:1;
-}
+/* ==== СЦЕНА/СЛАЙДЫ ==== */
+.stage{position:relative; height:100dvh; padding:24px; display:grid; place-items:center; z-index:1}
 .slide{
   position:absolute; inset:0; display:grid; place-items:center; padding:24px;
   opacity:0; transform: translateY(24px) scale(.98);
@@ -54,35 +49,29 @@ body{
   background: var(--card);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow);
-  padding: clamp(26px, 4.2vw, 44px);  /* чуть больше паддинг, чтобы текст не резался */
+  padding: clamp(26px, 4.2vw, 44px);
   border:1px solid rgba(78,107,58,.12);
 }
 
-/* заголовок — уменьшен и безопасная высота строки */
+/* заголовок — безопасный */
 .tagline{
-  margin:0;
-  font-weight:900;
-  line-height:1.14;
-  font-size: clamp(24px, 4.2vw, 36px); /* ↓ ещё чуть меньше max */
+  margin:0; font-weight:900; line-height:1.14;
+  font-size: clamp(24px, 4.2vw, 36px);
   background: linear-gradient(180deg, var(--forest-700), var(--forest-500));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  text-align:center;
+  -webkit-background-clip:text; background-clip:text; color:transparent; text-align:center;
 }
 .card-intro{display:grid; gap:24px; place-items:center}
 
 /* ==== КНОПКИ ==== */
 .btn{
-  position:relative; display:inline-grid; place-items:center;
-  gap:8px; padding:14px 22px;
-  font-weight:800; letter-spacing:.2px;
-  border:none; outline:none; cursor:pointer;
-  border-radius: var(--radius-lg);
+  position:relative; display:inline-grid; place-items:center; gap:8px;
+  padding:14px 22px; font-weight:800; letter-spacing:.2px;
+  border:none; outline:none; cursor:pointer; border-radius: var(--radius-lg);
   transition: transform .18s var(--ease-smooth), filter .18s var(--ease-smooth), box-shadow .18s var(--ease-smooth);
 }
 .btn:disabled{opacity:.5; cursor:not-allowed}
-
 .btn-primary{
-  color: var(--soil-800);             /* коричневый текст */
+  color: var(--soil-800);
   background:
     linear-gradient(180deg, #fff6db, #ffe39b) padding-box,
     radial-gradient(140% 140% at 0% 0%, rgba(255,215,120,.9), transparent 50%) border-box;
@@ -98,13 +87,9 @@ body{
   transition: opacity .3s var(--ease-smooth), transform .3s var(--ease-smooth);
 }
 .btn-primary:hover .btn-wave{opacity:.9; transform: translateY(0)}
-
 .btn-ghost{
-  background: rgba(255,255,255,.6);
-  border:1px solid rgba(78,107,58,.18);
-  color: var(--soil-700);
+  background: rgba(255,255,255,.6); border:1px solid rgba(78,107,58,.18); color: var(--soil-700);
 }
-.btn-ghost:hover{filter:brightness(1.02)}
 .btn-accent{
   color: var(--soil-800);
   background: linear-gradient(180deg, var(--sun-300), var(--sun-500));
@@ -113,60 +98,69 @@ body{
 
 /* ==== СЛАЙД 2: форма ==== */
 .card-form{display:grid; gap:18px}
-.card-title{
-  margin:0 0 6px 0;
-  font-size: clamp(20px, 3.2vw, 28px);
-  font-weight: 800;
-  color: var(--forest-700);
-}
+.card-title{margin:0 0 6px 0; font-size: clamp(20px, 3.2vw, 28px); font-weight: 800; color: var(--forest-700)}
 .goals{list-style:none; margin:0; padding:0; display:grid; gap:12px}
-.goal-row{
-  display:grid; grid-template-columns: 28px 1fr; gap:10px;
-  align-items:center; animation: rowIn .28s var(--ease-smooth);
-}
+.goal-row{display:grid; grid-template-columns: 28px 1fr; gap:10px; align-items:center; animation: rowIn .28s var(--ease-smooth)}
 @keyframes rowIn { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
-
 .num{font-weight:800; color:var(--forest-700)}
 .goal-input{
-  width:100%; padding:14px 14px; border-radius:12px;
-  border:1px solid rgba(78,107,58,.20);
-  background: #ffffffd9;
-  outline:none; font-size:16px; color:var(--ink);
+  width:100%; padding:14px 14px; border-radius:12px; border:1px solid rgba(78,107,58,.20);
+  background: #ffffffd9; outline:none; font-size:16px; color:var(--ink);
   transition: box-shadow .18s var(--ease-smooth), border-color .18s var(--ease-smooth);
 }
-.goal-input:focus{
-  border-color: color-mix(in oklab, var(--sun-400) 36%, var(--forest-500) 24%);
-  box-shadow: 0 0 0 6px rgba(255,205,100,.18);
-}
+.goal-input:focus{border-color: color-mix(in oklab, var(--sun-400) 36%, var(--forest-500) 24%); box-shadow: 0 0 0 6px rgba(255,205,100,.18)}
 .form-actions{display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:6px}
 
-/* ==== СЛАЙД 3 ==== */
+/* ==== СЛАЙД 3 — подарок ==== */
 .card-reward{display:grid; gap:22px; place-items:center; text-align:center}
-.reward-title{
-  margin:0;
-  font-weight:800;
-  line-height:1.22;
-  font-size: clamp(20px, 3.2vw, 30px);  /* меньше, чтобы точно не резалось */
-  color: var(--forest-700);
+.reward-title{margin:0; font-weight:800; line-height:1.22; font-size: clamp(20px, 3.2vw, 30px); color: var(--forest-700)}
+.gift-wrap{position:relative; display:grid; place-items:center}
+.gift-glow{
+  position:absolute; inset:auto; width:min(360px, 62vw); pointer-events:none; /* не кликается */
+  filter: drop-shadow(0 12px 40px rgba(255,240,160,.45));
 }
-
-/* Кнопка подарка: убрал фон, рамку; PNG со свечением и мягкими ховерами */
-.gift-btn{
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-.gift-btn img{
-  display:block;
-  width:min(300px, 60vw);
-  height:auto;
-  /* белое «свечение» вокруг PNG */
-  filter:
-    drop-shadow(0 8px 18px rgba(255,255,255,.65))
-    drop-shadow(0 0 32px rgba(255,255,255,.55))
-    drop-shadow(0 0 56px rgba(255,220,120,.35));
-  transition: transform .18s var(--ease-smooth), filter .18s var(--ease-smooth);
-}
+.gift-btn{background: transparent; border: none; padding: 0; cursor: pointer}
+.gift-btn img{display:block; width:min(300px, 55vw); height:auto; transition: transform .18s var(--ease-smooth)}
 .gift-btn:hover img{ transform: translateY(-2px) scale(1.02) }
-.gift-btn:active img{ transform: translateY(0) scale(1.00) }
+.gift-btn:active img{ transform: translateY(0) }
+
+/* ==== СЛАЙД 4 — раскрытие подарка ==== */
+.reveal{display:grid; place-items:center; gap:16px; text-align:center}
+.reveal-title{margin:0; font-weight:900; color:var(--forest-700); font-size: clamp(22px, 3.4vw, 32px)}
+.confetti-overlay{
+  position:absolute; inset:0; pointer-events:none; object-fit:cover; opacity:.95;
+}
+.gift-opened{display:block; width:min(420px, 70vw); height:auto; filter: drop-shadow(0 10px 40px rgba(0,0,0,.2)) }
+.tap-hint{margin:6px 0 0; font-size:14px; opacity:.75}
+
+/* ==== СЛАЙД 5 — сцена с дедушкой ==== */
+.scene{
+  position:relative;
+  width:min(1000px, 94vw); height:min(640px, 70vh);
+  display:grid; place-items:end center;
+  padding: 12px;
+  /* сам фон поляны зададим через класс на body (scene-meadow) */
+  background: transparent;
+}
+body.scene-meadow .bg-image{
+  background-image: url("../img/meadow-scene.jpg");
+}
+.grandpa{
+  position:absolute; right:4%; bottom:2%;
+  width:min(420px, 46vw); height:auto;
+  filter: drop-shadow(0 14px 40px rgba(0,0,0,.25));
+}
+.speech{
+  position:absolute; left:4%; bottom:24%;
+  max-width:min(520px, 56vw);
+}
+.speech-bubble{
+  background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:18px;
+  padding:14px 16px; font-weight:700; color:#2c3b20;
+  box-shadow: 0 14px 40px rgba(0,0,0,.10);
+  position:relative;
+}
+.speech-bubble:after{
+  content:""; position:absolute; left:18px; bottom:-10px; width:0; height:0;
+  border:10px solid transparent; border-top-color:#fffef9; filter: drop-shadow(0 -1px 0 rgba(0,0,0,.06));
+}
