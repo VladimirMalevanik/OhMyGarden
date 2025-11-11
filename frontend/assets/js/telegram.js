@@ -1,4 +1,3 @@
-// Безопасный доступ к Telegram WebApp
 export function getTelegramUser() {
   try {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -6,6 +5,6 @@ export function getTelegramUser() {
       wa.ready && wa.ready();
       return wa.initDataUnsafe?.user || null;
     }
-  } catch (_) {}
+  } catch {}
   return null;
 }

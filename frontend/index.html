@@ -3,51 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <meta name="theme-color" content="#eaf6df"/>
+  <meta name="theme-color" content="#f0f7e6"/>
   <title>MyGarden — преврати рутину в игру</title>
 
-  <!-- Telegram Mini App SDK (страница работает и без него) -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Токены и стили -->
-  <link rel="preload" href="assets/css/tokens.css" as="style">
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <!-- Укажите адрес API бэкенда после деплоя -->
   <script>
-    window.MYGARDEN_API_BASE = ""; // пример: "https://mygarden-api.onrender.com"
+    window.MYGARDEN_API_BASE = ""; // позже подставим URL бэка
   </script>
 </head>
 <body>
-  <!-- Слоистый фон с блюром -->
+  <!-- фон: твоя картинка с блюром -->
   <div class="bg">
-    <div class="bg-layer bg-1"></div>
-    <div class="bg-layer bg-2"></div>
-    <div class="bg-layer bg-3"></div>
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="bg-tint" aria-hidden="true"></div>
   </div>
 
-  <!-- Слайды -->
+  <!-- сцена со слайдами -->
   <main id="root" class="stage">
-    <!-- Слайд 1 — приветствие -->
+    <!-- Слайд 1 -->
     <section class="slide slide--active" id="slide-hello" aria-label="Онбординг">
       <div class="card card-intro" role="dialog" aria-modal="true">
         <h1 class="tagline">Преврати рутину в игру.</h1>
-        <button id="startBtn" class="btn btn-primary" type="button">Начать</button>
+        <button id="startBtn" class="btn btn-primary" type="button">
+          <span class="btn-label">Начать</span>
+          <span class="btn-wave" aria-hidden="true"></span>
+        </button>
       </div>
     </section>
 
-    <!-- Слайд 2 — пока пустой -->
-    <section class="slide" id="slide-next" aria-label="Следующий шаг">
-      <div class="empty-hold">
-        <!-- намеренно пусто, далее сюда придёт опрос/контент -->
+    <!-- Слайд 2 — цели -->
+    <section class="slide" id="slide-goals" aria-label="Цели на год">
+      <div class="card card-form">
+        <h2 class="card-title">Начнем с глобального: какие твои цели на этот год?</h2>
+
+        <ol id="goalsList" class="goals">
+          <li class="goal-row">
+            <span class="num">1.</span>
+            <input class="goal-input" type="text" placeholder="Опиши первую цель..." maxlength="160" />
+          </li>
+        </ol>
+
+        <div class="form-actions">
+          <button id="addGoal" class="btn btn-ghost" type="button" aria-label="Добавить цель">＋ Добавить цель</button>
+          <button id="nextBtn" class="btn btn-accent" type="button" disabled>Продолжить</button>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- Скрипты -->
-  <script src="assets/js/telegram.js"></script>
-  <script src="assets/js/api.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script type="module" src="assets/js/telegram.js"></script>
+  <script type="module" src="assets/js/api.js"></script>
+  <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

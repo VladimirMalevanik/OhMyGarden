@@ -1,32 +1,24 @@
 :root{
-  /* Приближено к вашим токенам: forest/sky/water/sunlight */
+  /* зелёные тона (forest) */
+  --forest-800:#2f4c24;
   --forest-700:#3f5d2f;
   --forest-600:#4e6b3a;
   --forest-500:#6e8f56;
-  --forest-400:#8cae72;
-  --forest-300:#a9c792;
+  --forest-400:#8db372;
 
-  --sky-100:#eff9ed;
-  --sky-200:#e6f6e2;
-  --sky-300:#d5f0d4;
-  --sky-400:#c3e8c6;
-  --sky-500:#b1e0b7;
-
-  --water-300:#bfead9;
-  --water-400:#a9e1cf;
-
-  --sun-300:#ffd66b;
+  /* солнечные акценты (sunlight) */
+  --sun-500:#ffbf2f; /* тёплый */
   --sun-400:#ffc94a;
+  --sun-300:#ffd972;
 
-  --card:#f6fbf1;     /* почти белая салатовая */
-  --ink:#24311f;      /* тёмный текст */
-  --shadow: 0 14px 48px rgba(34,66,32,.18);
+  /* карточка — тёплый салатовый */
+  --card:#f5fbea;
+
+  /* текст/тени/радиусы */
+  --ink:#22311c;
+  --shadow: 0 16px 56px rgba(40,70,30,.22);
   --radius-2xl: 24px;
-
-  --elev-1: 12px;
-  --elev-2: 20px;
+  --radius-lg: 14px;
 
   --ease-smooth: cubic-bezier(.22,.61,.36,1);
-
-  --safe-y: env(safe-area-inset-bottom, 0);
 }

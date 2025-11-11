@@ -1,87 +1,135 @@
-/* Базовые */
+/* Сброс/база */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   color:var(--ink);
   font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--sky-200);
+  background:#eaf5de;
   overflow:hidden;
 }
 
-/* Многослойный блюр-фон */
-.bg{position:fixed; inset:0; pointer-events:none; filter:blur(18px);}
-.bg-layer{position:absolute; inset:-20%}
-.bg-1{background: radial-gradient(60% 60% at 20% 20%, var(--sky-400), transparent 60%),
-                         radial-gradient(60% 60% at 90% 0%, var(--water-400), transparent 70%);}
-.bg-2{background: radial-gradient(60% 60% at 0% 100%, var(--sky-300), transparent 65%),
-                         radial-gradient(60% 60% at 80% 80%, var(--forest-300), transparent 70%); mix-blend-mode:multiply;}
-.bg-3{background: radial-gradient(50% 50% at 50% 50%, var(--sky-100), transparent 70%); opacity:.7;}
+/* ==== ФОН С БЛЮРОМ (твоя картинка) ==== */
+.bg{position:fixed; inset:0; z-index:0}
+.bg-image{
+  position:absolute; inset:-8%;
+  background: url("../img/hero-field.jpg") center/cover no-repeat;
+  filter: blur(22px) saturate(1.05);
+  opacity:.7; /* ~70% */
+  transform: scale(1.06);
+}
+.bg-tint{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.35), transparent 60%);
+}
 
-/* Сцена/слайды */
-.stage{position:relative; inset:0; height:100dvh; display:grid; place-items:center; padding:24px;}
+/* ==== СЦЕНА/СЛАЙДЫ ==== */
+.stage{position:relative; height:100dvh; padding:24px; display:grid; place-items:center; z-index:1}
 .slide{
   position:absolute; inset:0; display:grid; place-items:center; padding:24px;
-  opacity:0; transform: translateY(20px) scale(.98);
+  opacity:0; transform: translateY(24px) scale(.98);
   transition: opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth);
+  pointer-events:none;
 }
-.slide--active{opacity:1; transform: translateY(0) scale(1);}
+.slide--active{opacity:1; transform: translateY(0) scale(1); pointer-events:auto}
 
-/* Карточка */
+/* ==== КАРТОЧКИ ==== */
 .card{
-  width: min(680px, 92vw);
-  padding: clamp(20px, 4vw, 36px);
+  width:min(840px,92vw);
+  background: var(--card);
   border-radius: var(--radius-2xl);
-  background: color-mix(in oklab, var(--card) 82%, white 18%);
   box-shadow: var(--shadow);
-  backdrop-filter: saturate(120%) blur(6px);
-  border: 1px solid color-mix(in oklab, var(--forest-400) 12%, transparent);
+  padding: clamp(22px, 4vw, 40px);
+  border:1px solid rgba(78,107,58,.12);
 }
-.card-intro{display:grid; gap:22px; place-items:center; text-align:center;}
+
+/* заголовки */
 .tagline{
   margin:0;
-  font-weight:800;
-  letter-spacing:.2px;
-  line-height:1.08;
-  font-size: clamp(28px, 5vw, 44px);
-  background: linear-gradient(180deg, var(--forest-600), var(--forest-400));
+  font-weight:900;
+  line-height:1.1;
+  /* сделал меньше чтобы точно не резалось */
+  font-size: clamp(28px, 5.2vw, 48px);
+  background: linear-gradient(180deg, var(--forest-700), var(--forest-500));
   -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-align:center;
 }
+.card-intro{display:grid; gap:24px; place-items:center}
 
-/* Кнопка */
+/* ==== КНОПКИ ==== */
 .btn{
-  --btn-bg: linear-gradient(180deg, #ffffff, #eff8e9);
-  --btn-ink: var(--forest-600);
-  appearance:none; border:none; outline:none;
-  padding: 14px 22px; font-size: 16px; font-weight: 700; letter-spacing:.2px;
-  border-radius: 14px; color: var(--btn-ink);
-  background: var(--btn-bg);
-  box-shadow: 0 2px 0 rgba(0,0,0,.04), 0 10px 24px rgba(60, 96, 52, .15) inset;
-  transition: transform .2s var(--ease-smooth), box-shadow .2s var(--ease-smooth), filter .2s;
+  position:relative;
+  display:inline-grid; place-items:center;
+  gap:8px; padding:14px 22px;
+  font-weight:800; letter-spacing:.2px;
+  border:none; outline:none; cursor:pointer;
+  border-radius: var(--radius-lg);
+  transition: transform .18s var(--ease-smooth), filter .18s var(--ease-smooth), box-shadow .18s var(--ease-smooth);
 }
-.btn:hover{transform: translateY(-1px)}
-.btn:active{transform: translateY(0); box-shadow: 0 2px 0 rgba(0,0,0,.04) inset;}
+.btn:disabled{opacity:.5; cursor:not-allowed}
+
 .btn-primary{
-  /* мягкий зелёный с солнечным отблеском */
-  background: linear-gradient(180deg, #ffffff, #eff8e9) padding-box,
-              radial-gradient(120% 120% at 0% 0%, var(--sun-300), transparent 40%) border-box;
-  border: 2px solid color-mix(in oklab, var(--forest-400) 22%, white);
+  /* жёлто-зеленый акцентный, яркий */
+  color:#3a4d25;
+  background:
+    linear-gradient(180deg, #fff6db, #ffe9a8) padding-box,
+    radial-gradient(140% 140% at 0% 0%, rgba(255,215,120,.9), transparent 50%) border-box;
+  border:2px solid rgba(255,206,110,.8);
+  box-shadow: 0 2px 0 rgba(0,0,0,.05) inset, 0 10px 28px rgba(255,205,100,.35);
+}
+.btn-primary:hover{transform: translateY(-1px)}
+.btn-primary:active{transform: translateY(0)}
+
+.btn-primary .btn-wave{
+  position:absolute; inset:-2px; border-radius: inherit;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.6), transparent 60%);
+  opacity:.0; transform: translateY(-6px);
+  transition: opacity .3s var(--ease-smooth), transform .3s var(--ease-smooth);
+}
+.btn-primary:hover .btn-wave{opacity:.9; transform: translateY(0)}
+
+.btn-ghost{
+  background: rgba(255,255,255,.6);
+  border:1px solid rgba(78,107,58,.18);
+  color: var(--forest-700);
+}
+.btn-ghost:hover{filter:brightness(1.02)}
+.btn-accent{
+  color:#2e3d23;
+  background: linear-gradient(180deg, var(--sun-300), var(--sun-500));
+  box-shadow: 0 2px 0 rgba(0,0,0,.05) inset, 0 10px 26px rgba(255,191,47,.35);
 }
 
-/* Плейсхолдер следующего слайда */
-.empty-hold{
-  width:min(900px,92vw);
-  height:min(70dvh,560px);
-  border-radius: var(--radius-2xl);
-  background: color-mix(in oklab, var(--sky-100) 70%, white);
-  box-shadow: var(--shadow);
-  border: 1px dashed color-mix(in oklab, var(--forest-400) 30%, transparent);
+/* ==== СЛАЙД 2: форма ==== */
+.card-form{display:grid; gap:18px}
+.card-title{
+  margin:0 0 6px 0;
+  font-size: clamp(20px, 3.2vw, 28px);
+  font-weight: 800;
+  color: var(--forest-700);
+}
+.goals{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+.goal-row{
+  display:grid; grid-template-columns: 28px 1fr; gap:10px;
+  align-items:center; animation: rowIn .28s var(--ease-smooth);
+}
+@keyframes rowIn { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+
+.num{font-weight:800; color:var(--forest-700)}
+.goal-input{
+  width:100%; padding:14px 14px; border-radius:12px;
+  border:1px solid rgba(78,107,58,.20);
+  background: #ffffffd9;
+  outline:none; font-size:16px; color:var(--ink);
+  transition: box-shadow .18s var(--ease-smooth), border-color .18s var(--ease-smooth);
+}
+.goal-input:focus{
+  border-color: color-mix(in oklab, var(--sun-400) 36%, var(--forest-500) 24%);
+  box-shadow: 0 0 0 6px rgba(255,205,100,.18);
 }
 
-/* Переход к следующему слайду */
-.stage--next #slide-hello{opacity:0; transform: translateY(-10px) scale(.98);}
-.stage--next #slide-next{opacity:1; transform: translateY(0) scale(1);}
-
-/* Без прокрутки на iOS */
-@supports (-webkit-touch-callout:none){body{height:100dvh}}
-
+.form-actions{
+  display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:6px;
+}
