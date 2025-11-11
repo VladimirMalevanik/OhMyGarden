@@ -1,4 +1,4 @@
-/* Сброс/база */
+/* База */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -9,29 +9,32 @@ body{
   overflow:hidden;
 }
 
-/* ==== ФОН (30% видимости) ==== */
+/* ==== ФОН (твоя картинка гораздо заметнее) ==== */
 .bg{position:fixed; inset:0; z-index:0}
 .bg-image{
   position:absolute; inset:-8%;
   background: url("../img/hero-field.jpg") center/cover no-repeat;
-  filter: blur(22px) saturate(1.05);
-  opacity:.3;           /* <-- 30% */
+  filter: blur(18px) saturate(1.02);
+  opacity:.75;            /* картинка видна ~75% */
   transform: scale(1.06);
 }
 .bg-tint{
   position:absolute; inset:0;
+  /* лёгкий «свет» для глубины, сильно ослаблен */
   background:
-    radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.45), transparent 60%),
-    radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.30), transparent 60%);
+    radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.15), transparent 60%),
+    radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.10), transparent 60%);
 }
 
-/* канвас конфетти */
-.confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:3}
-
 /* ==== СЦЕНА/СЛАЙДЫ ==== */
-.stage{position:relative; height:100dvh; padding:24px; display:grid; place-items:center; z-index:1}
+.stage{
+  position:relative; height:100dvh; padding:24px;
+  display:grid; align-items:start; justify-items:center;  /* поднимаем контент выше */
+  z-index:1;
+}
 .slide{
-  position:absolute; inset:0; display:grid; place-items:center; padding:24px;
+  position:absolute; inset:0; display:grid; align-items:start; justify-items:center;
+  padding:24px;
   opacity:0; transform: translateY(24px) scale(.98);
   transition: opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth);
   pointer-events:none;
@@ -46,15 +49,15 @@ body{
   box-shadow: var(--shadow);
   padding: clamp(22px, 4vw, 40px);
   border:1px solid rgba(78,107,58,.12);
+  margin-top: 8vh; /* поднял карточку, чтобы заголовок точно не резался */
 }
 
-/* заголовки */
+/* заголовок — чуть меньше и безопасная высота строки */
 .tagline{
   margin:0;
   font-weight:900;
-  line-height:1.08;
-  /* уменьшил, чтобы нигде не резалось */
-  font-size: clamp(26px, 5vw, 42px);
+  line-height:1.12;
+  font-size: clamp(24px, 4.4vw, 38px); /* уменьшил max */
   background: linear-gradient(180deg, var(--forest-700), var(--forest-500));
   -webkit-background-clip:text; background-clip:text; color:transparent;
   text-align:center;
@@ -83,7 +86,6 @@ body{
 }
 .btn-primary:hover{transform: translateY(-1px)}
 .btn-primary:active{transform: translateY(0)}
-
 .btn-primary .btn-wave{
   position:absolute; inset:-2px; border-radius: inherit;
   background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.6), transparent 60%);
@@ -95,11 +97,11 @@ body{
 .btn-ghost{
   background: rgba(255,255,255,.6);
   border:1px solid rgba(78,107,58,.18);
-  color: var(--soil-700);             /* коричневый текст */
+  color: var(--soil-700);
 }
 .btn-ghost:hover{filter:brightness(1.02)}
 .btn-accent{
-  color: var(--soil-800);             /* коричневый текст */
+  color: var(--soil-800);
   background: linear-gradient(180deg, var(--sun-300), var(--sun-500));
   box-shadow: 0 2px 0 rgba(0,0,0,.05) inset, 0 10px 26px rgba(255,191,47,.35);
 }
@@ -134,7 +136,7 @@ body{
 .form-actions{display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:6px}
 
 /* ==== СЛАЙД 3 ==== */
-.card-reward{display:grid; gap:20px; place-items:center; text-align:center}
+.card-reward{display:grid; gap:20px; place-items:center; text-align:center; margin-top: 8vh}
 .reward-title{margin:0; font-weight:800; font-size: clamp(20px, 3.4vw, 30px); color:var(--forest-700)}
 .gift-btn{
   background: linear-gradient(180deg, #fff, #fff8e6);
@@ -145,6 +147,4 @@ body{
 }
 .gift-btn:hover{transform: translateY(-2px)}
 .gift-btn:active{transform: translateY(0)}
-.gift-btn img{
-  display:block; width:min(280px, 60vw); height:auto;
-}
+.gift-btn img{display:block; width:min(280px, 60vw); height:auto}

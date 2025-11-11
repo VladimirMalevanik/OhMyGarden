@@ -1,6 +1,6 @@
 import { getTelegramUser } from "./telegram.js";
-import { getStatus, markSurveyDone } from "./api.js";
-import { confettiBurst } from "./effects.js";
+// api.js подключен, но в тесте мы его не используем, оставим как заглушку
+// import { getStatus, markSurveyDone } from "./api.js";
 
 const root = document.getElementById("root");
 const startBtn = document.getElementById("startBtn");
@@ -11,36 +11,14 @@ const giftBtn = document.getElementById("giftBtn");
 
 const tgUser = getTelegramUser();
 const tgId = tgUser?.id ? String(tgUser.id) : "guest";
-const initData = (window.Telegram?.WebApp?.initData || "");
-const LS_KEY = `mg:survey_done:${tgId}`;
+// ТЕСТ-РЕЖИМ: всегда разрешаем проход дальше
+const TEST_MODE = true;
 
 let goalCount = 1;
 
 function activateSlide(idToShow) {
   document.querySelectorAll(".slide").forEach(s => s.classList.remove("slide--active"));
   document.getElementById(idToShow).classList.add("slide--active");
-}
-
-/* ===== Онбординг один раз ===== */
-async function shouldShowOnboarding() {
-  if (localStorage.getItem(LS_KEY) === "1") return false;
-  try {
-    if (tgUser) {
-      const status = await getStatus(tgId);
-      if (status?.survey_done) {
-        localStorage.setItem(LS_KEY, "1");
-        return false;
-      }
-    }
-  } catch {}
-  return true;
-}
-
-async function markDone() {
-  localStorage.setItem(LS_KEY, "1");
-  try {
-    if (tgUser) await markSurveyDone(tgId, initData);
-  } catch {}
 }
 
 /* ===== Валидация формы ===== */
@@ -70,9 +48,12 @@ function addGoalRow() {
 }
 
 /* ===== Инициализация ===== */
-async function init() {
+function init() {
+  // Кнопка "Начать" — всегда работает в тесте
   startBtn.addEventListener("click", async () => {
-    await markDone();
+    if (!TEST_MODE) {
+      // тут будет запись статуса на бэкенд
+    }
     activateSlide("slide-goals");
     setTimeout(() => goalsList.querySelector(".goal-input")?.focus(), 30);
   });
@@ -85,17 +66,14 @@ async function init() {
     activateSlide("slide-reward");
   });
 
-  giftBtn.addEventListener("click", (e) => {
-    // конфетти из центра кнопки
-    const rect = giftBtn.getBoundingClientRect();
-    const x = rect.left + rect.width/2;
-    const y = rect.top + rect.height/2;
-    confettiBurst(x, y, 200);
+  // Подарок пока без эффектов — просто «кликается»
+  giftBtn.addEventListener("click", () => {
+    giftBtn.classList.add("pulse");
+    setTimeout(() => giftBtn.classList.remove("pulse"), 400);
   });
 
-  if (!(await shouldShowOnboarding())) {
-    activateSlide("slide-goals");
-  }
+  // Всегда стартуем со слайда приветствия в тесте
+  activateSlide("slide-hello");
   updateContinueState();
 }
 
