@@ -1,140 +1,76 @@
 /* База */
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0; color:var(--ink);
-  font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background:#eaf5de; overflow:hidden;
-}
+body{ margin:0; color:#22311c; font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:#eaf5de; overflow:hidden }
 
-/* ==== ФОН ==== */
+/* ФОН */
 .bg{position:fixed; inset:0; z-index:0}
-.bg-image{position:absolute; inset:-8%; background:url("../img/hero-field.jpg") center/cover no-repeat; filter:none; opacity:1; transform:scale(1.04)}
-.bg-blur{position:absolute; inset:0; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); background:rgba(255,255,255,.10); pointer-events:none; transition:opacity .5s var(--ease-smooth)}
-.bg-tint{position:absolute; inset:0; background:
-  radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.08), transparent 60%),
-  radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.05), transparent 60%); pointer-events:none}
+.bg-image{position:absolute; inset:-8%; background:url("../img/hero-field.jpg") center/cover no-repeat; transform:scale(1.04)}
+.bg-blur{position:absolute; inset:0; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); background:rgba(255,255,255,.10); pointer-events:none; transition:opacity .5s cubic-bezier(.22,.61,.36,1)}
+.bg-tint{position:absolute; inset:0; background:radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.08), transparent 60%), radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.05), transparent 60%); pointer-events:none}
 body.no-blur .bg-blur{opacity:0}
 
-/* ==== СЦЕНА/СЛАЙДЫ ==== */
+/* Слайды */
 .stage{position:relative; height:100dvh; padding:24px; display:grid; place-items:center; z-index:1}
-.slide{position:absolute; inset:0; display:grid; place-items:center; padding:24px; opacity:0; transform:translateY(24px) scale(.98); transition:opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth); pointer-events:none}
+.slide{position:absolute; inset:0; display:grid; place-items:center; padding:24px; opacity:0; transform:translateY(24px) scale(.98); transition:opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1); pointer-events:none}
 .slide--active{opacity:1; transform:translateY(0) scale(1); pointer-events:auto}
 
-/* ==== КАРТОЧКИ ==== */
-.card{width:min(840px,92vw); background:var(--card); border-radius:var(--radius-2xl); box-shadow:var(--shadow); padding:clamp(26px,4.2vw,44px); border:1px solid rgba(78,107,58,.12)}
-.tagline{margin:0; font-weight:900; line-height:1.14; font-size:clamp(24px,4.2vw,36px); background:linear-gradient(180deg, var(--forest-700), var(--forest-500)); -webkit-background-clip:text; background-clip:text; color:transparent; text-align:center}
+/* Карточки и кнопки */
+.card{width:min(840px,92vw); background:#f5fbea; border-radius:24px; box-shadow:0 16px 56px rgba(40,70,30,.22); padding:clamp(26px,4.2vw,44px); border:1px solid rgba(78,107,58,.12)}
+.tagline{margin:0; font-weight:900; line-height:1.14; font-size:clamp(24px,4.2vw,36px); background:linear-gradient(180deg,#3f5d2f,#6e8f56); -webkit-background-clip:text; background-clip:text; color:transparent; text-align:center}
 .card-intro{display:grid; gap:24px; place-items:center}
+.btn{position:relative; display:inline-grid; place-items:center; gap:8px; padding:14px 22px; font-weight:800; border:none; border-radius:14px; cursor:pointer; transition:transform .18s, box-shadow .18s}
+.btn-primary{color:#6b4b2f; background:linear-gradient(180deg,#fff6db,#ffe39b); border:2px solid rgba(255,206,110,.8); box-shadow:0 2px 0 rgba(0,0,0,.05) inset, 0 10px 28px rgba(255,205,100,.35)}
+.btn-ghost{background:rgba(255,255,255,.6); border:1px solid rgba(78,107,58,.18); color:#7a5535}
+.btn-accent{color:#6b4b2f; background:linear-gradient(180deg,#ffd972,#ffbf2f); box-shadow:0 2px 0 rgba(0,0,0,.05) inset, 0 10px 26px rgba(255,191,47,.35)}
 
-/* ==== КНОПКИ ==== */
-.btn{position:relative; display:inline-grid; place-items:center; gap:8px; padding:14px 22px; font-weight:800; letter-spacing:.2px; border:none; outline:none; cursor:pointer; border-radius:var(--radius-lg); transition:transform .18s var(--ease-smooth), filter .18s var(--ease-smooth), box-shadow .18s var(--ease-smooth)}
-.btn:disabled{opacity:.5; cursor:not-allowed}
-.btn-primary{color:var(--soil-800); background:linear-gradient(180deg,#fff6db,#ffe39b) padding-box, radial-gradient(140% 140% at 0% 0%, rgba(255,215,120,.9), transparent 50%) border-box; border:2px solid rgba(255,206,110,.8); box-shadow:0 2px 0 rgba(0,0,0,.05) inset, 0 10px 28px rgba(255,205,100,.35)}
-.btn-primary:hover{transform:translateY(-1px)}
-.btn-primary:active{transform:translateY(0)}
-.btn-primary .btn-wave{position:absolute; inset:-2px; border-radius:inherit; background:radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.6), transparent 60%); opacity:0; transform:translateY(-6px); transition:opacity .3s var(--ease-smooth), transform .3s var(--ease-smooth)}
-.btn-primary:hover .btn-wave{opacity:.9; transform:translateY(0)}
-.btn-ghost{background:rgba(255,255,255,.6); border:1px solid rgba(78,107,58,.18); color:var(--soil-700)}
-.btn-accent{color:var(--soil-800); background:linear-gradient(180deg, var(--sun-300), var(--sun-500)); box-shadow:0 2px 0 rgba(0,0,0,.05) inset, 0 10px 26px rgba(255,191,47,.35)}
-
-/* ==== СЛАЙД 2: форма ==== */
+/* Слайд 2 — форма */
 .card-form{display:grid; gap:18px}
-.card-title{margin:0 0 6px 0; font-size:clamp(20px,3.2vw,28px); font-weight:800; color:var(--forest-700)}
+.card-title{margin:0; font-size:clamp(20px,3.2vw,28px); font-weight:800; color:#3f5d2f}
 .goals{list-style:none; margin:0; padding:0; display:grid; gap:12px}
-.goal-row{display:grid; grid-template-columns:28px 1fr; gap:10px; align-items:center; animation:rowIn .28s var(--ease-smooth)}
+.goal-row{display:grid; grid-template-columns:28px 1fr; gap:10px; align-items:center; animation:rowIn .28s cubic-bezier(.22,.61,.36,1)}
 @keyframes rowIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
-.num{font-weight:800; color:var(--forest-700)}
-.goal-input{width:100%; padding:14px 14px; border-radius:12px; border:1px solid rgba(78,107,58,.20); background:#ffffffd9; outline:none; font-size:16px; color:var(--ink); transition:box-shadow .18s var(--ease-smooth), border-color .18s var(--ease-smooth)}
-.goal-input:focus{border-color:color-mix(in oklab, var(--sun-400) 36%, var(--forest-500) 24%); box-shadow:0 0 0 6px rgba(255,205,100,.18)}
-.form-actions{display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:6px}
+.goal-input{width:100%; padding:14px; border-radius:12px; border:1px solid rgba(78,107,58,.20); background:#ffffffd9; font-size:16px}
 
-/* ==== СЛАЙД 3 ==== */
+/* Слайд 3 */
 .card-reward{display:grid; gap:22px; place-items:center; text-align:center}
-.reward-title{margin:0; font-weight:800; line-height:1.22; font-size:clamp(20px,3.2vw,30px); color:var(--forest-700)}
+.reward-title{margin:0; font-weight:800; line-height:1.22; font-size:clamp(20px,3.2vw,30px); color:#3f5d2f}
 .gift-wrap{position:relative; display:grid; place-items:center}
 .gift-glow{position:absolute; width:min(360px,62vw); pointer-events:none; filter:drop-shadow(0 12px 40px rgba(255,240,160,.45))}
 .gift-btn{background:transparent; border:none; padding:0; cursor:pointer}
-.gift-btn img{display:block; width:min(300px,55vw); height:auto; transition:transform .18s var(--ease-smooth)}
-.gift-btn:hover img{transform:translateY(-2px) scale(1.02)}
-.gift-btn:active img{transform:translateY(0)}
+.gift-btn img{display:block; width:min(300px,55vw); height:auto}
 
-/* ==== СЛАЙД 4 ==== */
+/* Слайд 4 */
 .reveal{display:grid; place-items:center; gap:16px; text-align:center}
-.reveal-title{margin:0; font-weight:900; color:var(--forest-700); font-size:clamp(22px,3.4vw,32px)}
+.reveal-title{margin:0; font-weight:900; color:#3f5d2f; font-size:clamp(22px,3.4vw,32px)}
 .confetti-overlay{position:absolute; inset:0; pointer-events:none; object-fit:cover; opacity:.95}
 .gift-opened{display:block; width:min(420px,70vw); height:auto; filter:drop-shadow(0 10px 40px rgba(0,0,0,.2))}
 
-/* ==== СЛАЙД 5 — новая сцена (диалоги) ==== */
-.scene{position:relative; width:100%; height:100%; display:block}
+/* Слайд 5 — диалог */
+.scene{position:relative; width:100%; height:100%}
 body.scene-meadow .bg-image{background-image:url("../img/meadow-scene.jpg")}
-
-/* дед — вправо и крупный, но не уходит за край */
 .grandpa{
-  position:absolute;
-  right:clamp(16px, 5vw, 72px);
-  bottom:clamp(16px, 4vh, 56px);
-  width:clamp(500px, 52vw, 720px);
-  height:auto;
+  position:absolute; right:clamp(16px, 5vw, 72px); bottom:clamp(16px,4vh,56px);
+  width:clamp(540px, 52vw, 720px); height:auto;
   filter:drop-shadow(0 14px 40px rgba(0,0,0,.25));
-  will-change: transform, opacity;
 }
+.speech{position:absolute; top:calc(clamp(14px,6vh,72px) + env(safe-area-inset-top,0px)); left:50%; transform:translateX(-50%); width:100%; display:grid; place-items:center; padding:0 16px}
+.speech-bubble{max-width:min(980px, 90vw); background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:24px; padding:16px 22px; font-weight:800; color:#2c3b20; font-size:clamp(17px,2.0vw,21px); box-shadow:0 14px 40px rgba(0,0,0,.10)}
+@keyframes popInUp{from{opacity:0; transform:translateY(10px) scale(.985)} to{opacity:1; transform:translateY(0) scale(1)}}
+@keyframes popInRight{from{opacity:0; transform:translateX(12px) scale(.995)} to{opacity:1; transform:translateX(0) scale(1)}}
+.grandpa.anim-in{animation:popInRight .45s cubic-bezier(.22,.61,.36,1) both}
+.speech-bubble.anim-in{animation:popInUp .45s cubic-bezier(.22,.61,.36,1) both}
 
-/* бабл сверху по центру, безопасные отступы, чуть меньше чтобы не упираться */
-.speech{
-  position:absolute;
-  top: calc(clamp(14px, 6vh, 72px) + env(safe-area-inset-top, 0px));
-  left:50%; transform:translateX(-50%);
-  width:100%; display:grid; place-items:center; padding:0 16px;
-}
-.speech-bubble{
-  max-width:min(980px, 90vw);
-  background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:24px;
-  padding:16px 22px;
-  font-weight:800; color:#2c3b20;
-  font-size:clamp(17px, 2.0vw, 21px);
-  box-shadow:0 14px 40px rgba(0,0,0,.10);
-  will-change: transform, opacity;
-}
-
-/* анимации диалога */
-@keyframes popInUp { from { opacity:0; transform: translateY(10px) scale(.985); } to { opacity:1; transform: translateY(0) scale(1); } }
-@keyframes popInRight { from { opacity:0; transform: translateX(12px) scale(.995); } to { opacity:1; transform: translateX(0) scale(1); } }
-.grandpa.anim-in { animation: popInRight .45s var(--ease-smooth) both; }
-.speech-bubble.anim-in { animation: popInUp .45s var(--ease-smooth) both; }
-
-/* Респонсив-подстройки */
-@media (max-height: 720px) {
-  .grandpa{ width:clamp(460px, 48vw, 640px) }
-  .speech-bubble{ font-size:clamp(16px, 1.9vw, 20px) }
-}
-
-/* ==== СЛАЙД 6 — Сад (интерактив) ==== */
-.garden{
-  position:relative; width:100%; height:100%;
-  background: url("../img/meadow-scene.jpg") center/cover no-repeat;
-}
-
-/* интерактивные зоны */
+/* Слайд 6 — сад */
+.garden{position:relative; width:100%; height:100%; background:url("../img/garden-scene.jpg") center/cover no-repeat}
 #hotspots{position:absolute; inset:0}
-.hotspot{
-  position:absolute; border-radius:14px; background:transparent;
-  outline:none; border:1px dashed transparent; cursor:pointer;
-}
-.hotspot:focus-visible{border-color:rgba(255,255,255,.6)}
+.hotspot{position:absolute; border-radius:14px; background:transparent; outline:none; border:1px dashed transparent; cursor:pointer}
 .hotspot:hover{background:rgba(255,255,255,.02)}
+.hint{position:absolute; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.95); color:#2c3b20; font-weight:800; box-shadow:0 10px 26px rgba(0,0,0,.12); pointer-events:none; transform:translate(-50%,-110%); white-space:nowrap; font-size:14px}
+.grid{position:absolute; inset:0; opacity:.45; pointer-events:none}
+.grid-hint{position:absolute; left:12px; bottom:12px; padding:6px 10px; border-radius:10px; background:#111; color:#fff; font-weight:900; font-size:12px; letter-spacing:.3px; opacity:.85}
 
-/* тултип */
-.hint{
-  position:absolute; padding:8px 12px; border-radius:999px;
-  background:rgba(255,255,255,.95); color:#2c3b20; font-weight:800;
-  box-shadow:0 10px 26px rgba(0,0,0,.12); pointer-events:none;
-  transform: translate(-50%,-110%); white-space:nowrap; font-size:14px;
-}
-
-/* DEV: режим позиционирования */
-:root{ --dev-on: 0 }
-.dev-on .hotspot{ border-color: rgba(255,200,50,.8); background: rgba(255,210,80,.18) }
-.dev-on .hotspot::after{
-  content: attr(data-id); position:absolute; top:-18px; left:0;
-  font-size:12px; background:#0008; color:#fff; padding:2px 6px; border-radius:6px;
+@media (max-height:720px){
+  .grandpa{ width:clamp(500px, 48vw, 680px) }
+  .speech-bubble{ font-size:clamp(16px,1.9vw,20px) }
 }

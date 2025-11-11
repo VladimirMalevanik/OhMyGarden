@@ -14,7 +14,6 @@
   <script>window.MYGARDEN_API_BASE = "";</script>
 </head>
 <body>
-  <!-- Фон: чёткая картинка + мягкий блюр-слой сверху -->
   <div class="bg">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="bg-blur" aria-hidden="true"></div>
@@ -53,9 +52,7 @@
     <!-- Слайд 3 — подарок -->
     <section class="slide" id="slide-reward">
       <div class="card card-reward">
-        <h2 class="reward-title">
-          Супер! Самое сложное в любом деле — это начать, ты с этим справился. Вот твой подарок!
-        </h2>
+        <h2 class="reward-title">Супер! Самое сложное в любом деле — это начать, ты с этим справился. Вот твой подарок!</h2>
         <div class="gift-wrap">
           <img class="gift-glow" src="assets/img/gift-glow.png" alt="" aria-hidden="true">
           <button id="giftBtn" class="gift-btn" type="button" aria-label="Открыть подарок">
@@ -74,7 +71,7 @@
       </div>
     </section>
 
-    <!-- Слайд 5 — сцена с дедушкой и баблом -->
+    <!-- Слайд 5 — диалог с дедушкой -->
     <section class="slide" id="slide-scene">
       <div class="scene">
         <img id="grandpaImg" class="grandpa" src="assets/img/grandpa.png" alt="Садовник"/>
@@ -86,13 +83,13 @@
       </div>
     </section>
 
-    <!-- Слайд 6 — ваш сад с интерактивными зонами -->
+    <!-- Слайд 6 — сад с подсказками и сеткой 12×12 -->
     <section class="slide" id="slide-garden" aria-label="Сад">
       <div class="garden">
-        <!-- Контейнер под интерактивные зоны; элементы генерируются из JS -->
         <div id="hotspots"></div>
-        <!-- тултип -->
         <div id="hint" class="hint" role="tooltip" hidden></div>
+        <canvas id="grid" class="grid" hidden></canvas>
+        <div class="grid-hint">Нажми G, чтобы показать/скрыть сетку 12×12. Сообщи мне диапазоны клеток.</div>
       </div>
     </section>
   </main>
