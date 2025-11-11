@@ -71,7 +71,6 @@
         <h2 class="reveal-title">Что за... Какой-то сорняк?!</h2>
         <img id="confettiOverlay" class="confetti-overlay" src="assets/img/confetti-overlay.png" alt="" aria-hidden="true"/>
         <img class="gift-opened" src="assets/img/gift-opened.png" alt="Открытый подарок" />
-        <p class="tap-hint"></p>
       </div>
     </section>
 
@@ -84,6 +83,16 @@
             Это не сорняк, а росток — символ твоей дисциплины.
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Слайд 6 — ваш сад с интерактивными зонами -->
+    <section class="slide" id="slide-garden" aria-label="Сад">
+      <div class="garden">
+        <!-- Контейнер под интерактивные зоны; элементы генерируются из JS -->
+        <div id="hotspots"></div>
+        <!-- тултип -->
+        <div id="hint" class="hint" role="tooltip" hidden></div>
       </div>
     </section>
   </main>

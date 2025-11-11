@@ -63,58 +63,78 @@ body.no-blur .bg-blur{opacity:0}
 .reveal-title{margin:0; font-weight:900; color:var(--forest-700); font-size:clamp(22px,3.4vw,32px)}
 .confetti-overlay{position:absolute; inset:0; pointer-events:none; object-fit:cover; opacity:.95}
 .gift-opened{display:block; width:min(420px,70vw); height:auto; filter:drop-shadow(0 10px 40px rgba(0,0,0,.2))}
-.tap-hint{margin:6px 0 0; font-size:14px; opacity:.75}
 
-/* ==== СЛАЙД 5 — новая сцена ==== */
+/* ==== СЛАЙД 5 — новая сцена (диалоги) ==== */
 .scene{position:relative; width:100%; height:100%; display:block}
 body.scene-meadow .bg-image{background-image:url("../img/meadow-scene.jpg")}
 
-/* дед — адаптивно правее, но не уходит за край; размер тоже адаптивный */
+/* дед — вправо и крупный, но не уходит за край */
 .grandpa{
   position:absolute;
-  right:clamp(12px, 6vw, 64px);     /* не липнет к краю и не уходит за экран */
-  bottom:clamp(12px, 4vh, 48px);
-  width:clamp(460px, 50vw, 680px);  /* растёт, но в разумных пределах */
+  right:clamp(16px, 5vw, 72px);
+  bottom:clamp(16px, 4vh, 56px);
+  width:clamp(500px, 52vw, 720px);
   height:auto;
   filter:drop-shadow(0 14px 40px rgba(0,0,0,.25));
   will-change: transform, opacity;
 }
 
-/* бабл сверху по центру, безопасные отступы */
+/* бабл сверху по центру, безопасные отступы, чуть меньше чтобы не упираться */
 .speech{
   position:absolute;
-  top: calc(clamp(12px, 5vh, 64px) + env(safe-area-inset-top, 0px));
+  top: calc(clamp(14px, 6vh, 72px) + env(safe-area-inset-top, 0px));
   left:50%; transform:translateX(-50%);
   width:100%; display:grid; place-items:center; padding:0 16px;
 }
 .speech-bubble{
-  max-width:min(980px, 88vw);
+  max-width:min(980px, 90vw);
   background:#fffef9; border:1px solid rgba(0,0,0,.06); border-radius:24px;
-  padding:18px 24px;
+  padding:16px 22px;
   font-weight:800; color:#2c3b20;
-  font-size:clamp(18px, 2.1vw, 22px);  /* немного меньше верхняя граница */
+  font-size:clamp(17px, 2.0vw, 21px);
   box-shadow:0 14px 40px rgba(0,0,0,.10);
   will-change: transform, opacity;
 }
 
-/* ===== АНИМАЦИИ появления деда и бабла ===== */
-@keyframes popInUp {
-  from { opacity:0; transform: translateY(10px) scale(.985); }
-  to   { opacity:1; transform: translateY(0) scale(1); }
-}
-@keyframes popInRight {
-  from { opacity:0; transform: translateX(10px) scale(.995); }
-  to   { opacity:1; transform: translateX(0) scale(1); }
-}
+/* анимации диалога */
+@keyframes popInUp { from { opacity:0; transform: translateY(10px) scale(.985); } to { opacity:1; transform: translateY(0) scale(1); } }
+@keyframes popInRight { from { opacity:0; transform: translateX(12px) scale(.995); } to { opacity:1; transform: translateX(0) scale(1); } }
 .grandpa.anim-in { animation: popInRight .45s var(--ease-smooth) both; }
 .speech-bubble.anim-in { animation: popInUp .45s var(--ease-smooth) both; }
 
-/* ===== Респонсив-подстройки для низких экранов ===== */
+/* Респонсив-подстройки */
 @media (max-height: 720px) {
-  .grandpa{ width:clamp(420px, 46vw, 620px); bottom:clamp(8px, 3vh, 32px) }
-  .speech-bubble{ font-size:clamp(16px, 2vw, 20px) }
+  .grandpa{ width:clamp(460px, 48vw, 640px) }
+  .speech-bubble{ font-size:clamp(16px, 1.9vw, 20px) }
 }
-@media (max-width: 900px) {
-  .grandpa{ right:clamp(8px, 4vw, 40px); width:clamp(360px, 58vw, 560px) }
-  .speech-bubble{ max-width:min(940px, 92vw) }
+
+/* ==== СЛАЙД 6 — Сад (интерактив) ==== */
+.garden{
+  position:relative; width:100%; height:100%;
+  background: url("../img/meadow-scene.jpg") center/cover no-repeat;
+}
+
+/* интерактивные зоны */
+#hotspots{position:absolute; inset:0}
+.hotspot{
+  position:absolute; border-radius:14px; background:transparent;
+  outline:none; border:1px dashed transparent; cursor:pointer;
+}
+.hotspot:focus-visible{border-color:rgba(255,255,255,.6)}
+.hotspot:hover{background:rgba(255,255,255,.02)}
+
+/* тултип */
+.hint{
+  position:absolute; padding:8px 12px; border-radius:999px;
+  background:rgba(255,255,255,.95); color:#2c3b20; font-weight:800;
+  box-shadow:0 10px 26px rgba(0,0,0,.12); pointer-events:none;
+  transform: translate(-50%,-110%); white-space:nowrap; font-size:14px;
+}
+
+/* DEV: режим позиционирования */
+:root{ --dev-on: 0 }
+.dev-on .hotspot{ border-color: rgba(255,200,50,.8); background: rgba(255,210,80,.18) }
+.dev-on .hotspot::after{
+  content: attr(data-id); position:absolute; top:-18px; left:0;
+  font-size:12px; background:#0008; color:#fff; padding:2px 6px; border-radius:6px;
 }
