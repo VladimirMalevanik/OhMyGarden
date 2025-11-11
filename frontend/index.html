@@ -22,6 +22,9 @@
     <div class="bg-tint" aria-hidden="true"></div>
   </div>
 
+  <!-- канвас для конфетти -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
   <!-- сцена со слайдами -->
   <main id="root" class="stage">
     <!-- Слайд 1 -->
@@ -48,15 +51,28 @@
         </ol>
 
         <div class="form-actions">
-          <button id="addGoal" class="btn btn-ghost" type="button" aria-label="Добавить цель">＋ Добавить цель</button>
+          <button id="addGoal" class="btn btn-ghost" type="button" aria-label="Добавить цель">＋Ещё цель</button>
           <button id="nextBtn" class="btn btn-accent" type="button" disabled>Продолжить</button>
         </div>
+      </div>
+    </section>
+
+    <!-- Слайд 3 — подарок -->
+    <section class="slide" id="slide-reward" aria-label="Подарок">
+      <div class="card card-reward">
+        <h2 class="reward-title">
+          Супер! Самое сложное в любом деле — это начать, ты с этим справился. Вот твой подарок!
+        </h2>
+        <button id="giftBtn" class="gift-btn" type="button" aria-label="Открыть подарок">
+          <img src="assets/img/gift.png" alt="Подарок" />
+        </button>
       </div>
     </section>
   </main>
 
   <script type="module" src="assets/js/telegram.js"></script>
   <script type="module" src="assets/js/api.js"></script>
+  <script type="module" src="assets/js/effects.js"></script>
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

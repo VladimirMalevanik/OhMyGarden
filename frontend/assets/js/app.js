@@ -1,11 +1,13 @@
 import { getTelegramUser } from "./telegram.js";
 import { getStatus, markSurveyDone } from "./api.js";
+import { confettiBurst } from "./effects.js";
 
 const root = document.getElementById("root");
 const startBtn = document.getElementById("startBtn");
 const goalsList = document.getElementById("goalsList");
 const addGoal = document.getElementById("addGoal");
 const nextBtn = document.getElementById("nextBtn");
+const giftBtn = document.getElementById("giftBtn");
 
 const tgUser = getTelegramUser();
 const tgId = tgUser?.id ? String(tgUser.id) : "guest";
@@ -63,38 +65,37 @@ function addGoalRow() {
   `;
   goalsList.appendChild(li);
 
-  // если достигли 3 — скрыть кнопку добавления
   if (goalCount >= 3) addGoal.style.display = "none";
-
-  // подписаться на ввод для валидации
   li.querySelector(".goal-input").addEventListener("input", updateContinueState);
 }
 
 /* ===== Инициализация ===== */
 async function init() {
-  // кнопка теперь точно кликабельна (ничего не перекрывает)
   startBtn.addEventListener("click", async () => {
     await markDone();
     activateSlide("slide-goals");
-    // фокус на первое поле
     setTimeout(() => goalsList.querySelector(".goal-input")?.focus(), 30);
   });
 
-  // динамика формы
   goalsList.querySelector(".goal-input").addEventListener("input", updateContinueState);
   addGoal.addEventListener("click", addGoalRow);
+
   nextBtn.addEventListener("click", () => {
     if (nextBtn.disabled) return;
-    // здесь потом отправим цели на бэк; пока — мягкий фидбек
-    nextBtn.classList.add("pulse");
-    setTimeout(() => nextBtn.classList.remove("pulse"), 500);
+    activateSlide("slide-reward");
   });
 
-  // если онбординг уже пройден — сразу на форму
+  giftBtn.addEventListener("click", (e) => {
+    // конфетти из центра кнопки
+    const rect = giftBtn.getBoundingClientRect();
+    const x = rect.left + rect.width/2;
+    const y = rect.top + rect.height/2;
+    confettiBurst(x, y, 200);
+  });
+
   if (!(await shouldShowOnboarding())) {
     activateSlide("slide-goals");
   }
-
   updateContinueState();
 }
 
