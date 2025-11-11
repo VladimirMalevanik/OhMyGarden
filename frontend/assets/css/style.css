@@ -9,32 +9,39 @@ body{
   overflow:hidden;
 }
 
-/* ==== ФОН (твоя картинка гораздо заметнее) ==== */
+/* ==== ФОН: чёткая картинка + верхний блюр ==== */
 .bg{position:fixed; inset:0; z-index:0}
 .bg-image{
   position:absolute; inset:-8%;
   background: url("../img/hero-field.jpg") center/cover no-repeat;
-  filter: blur(18px) saturate(1.02);
-  opacity:.75;            /* картинка видна ~75% */
-  transform: scale(1.06);
+  filter: none;             /* картинка остаётся чёткой */
+  opacity: 1;
+  transform: scale(1.04);
+}
+/* «30%» блюра по ощущениям — лёгкий слой поверх */
+.bg-blur{
+  position:absolute; inset:0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.10);  /* едва заметная вуаль */
+  pointer-events:none;
 }
 .bg-tint{
   position:absolute; inset:0;
-  /* лёгкий «свет» для глубины, сильно ослаблен */
   background:
-    radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.15), transparent 60%),
-    radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.10), transparent 60%);
+    radial-gradient(60% 60% at 20% 10%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,.05), transparent 60%);
+  pointer-events:none;
 }
 
-/* ==== СЦЕНА/СЛАЙДЫ ==== */
+/* ==== СЦЕНА/СЛАЙДЫ (по центру) ==== */
 .stage{
   position:relative; height:100dvh; padding:24px;
-  display:grid; align-items:start; justify-items:center;  /* поднимаем контент выше */
+  display:grid; place-items:center;          /* строго по центру */
   z-index:1;
 }
 .slide{
-  position:absolute; inset:0; display:grid; align-items:start; justify-items:center;
-  padding:24px;
+  position:absolute; inset:0; display:grid; place-items:center; padding:24px;
   opacity:0; transform: translateY(24px) scale(.98);
   transition: opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth);
   pointer-events:none;
@@ -47,17 +54,16 @@ body{
   background: var(--card);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow);
-  padding: clamp(22px, 4vw, 40px);
+  padding: clamp(26px, 4.2vw, 44px);  /* чуть больше паддинг, чтобы текст не резался */
   border:1px solid rgba(78,107,58,.12);
-  margin-top: 8vh; /* поднял карточку, чтобы заголовок точно не резался */
 }
 
-/* заголовок — чуть меньше и безопасная высота строки */
+/* заголовок — уменьшен и безопасная высота строки */
 .tagline{
   margin:0;
   font-weight:900;
-  line-height:1.12;
-  font-size: clamp(24px, 4.4vw, 38px); /* уменьшил max */
+  line-height:1.14;
+  font-size: clamp(24px, 4.2vw, 36px); /* ↓ ещё чуть меньше max */
   background: linear-gradient(180deg, var(--forest-700), var(--forest-500));
   -webkit-background-clip:text; background-clip:text; color:transparent;
   text-align:center;
@@ -66,8 +72,7 @@ body{
 
 /* ==== КНОПКИ ==== */
 .btn{
-  position:relative;
-  display:inline-grid; place-items:center;
+  position:relative; display:inline-grid; place-items:center;
   gap:8px; padding:14px 22px;
   font-weight:800; letter-spacing:.2px;
   border:none; outline:none; cursor:pointer;
@@ -136,15 +141,32 @@ body{
 .form-actions{display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:6px}
 
 /* ==== СЛАЙД 3 ==== */
-.card-reward{display:grid; gap:20px; place-items:center; text-align:center; margin-top: 8vh}
-.reward-title{margin:0; font-weight:800; font-size: clamp(20px, 3.4vw, 30px); color:var(--forest-700)}
-.gift-btn{
-  background: linear-gradient(180deg, #fff, #fff8e6);
-  border:1px solid rgba(255,206,110,.7);
-  border-radius:20px; padding:18px 22px; cursor:pointer;
-  box-shadow: 0 12px 36px rgba(255,200,80,.25);
-  transition: transform .18s var(--ease-smooth), box-shadow .18s var(--ease-smooth);
+.card-reward{display:grid; gap:22px; place-items:center; text-align:center}
+.reward-title{
+  margin:0;
+  font-weight:800;
+  line-height:1.22;
+  font-size: clamp(20px, 3.2vw, 30px);  /* меньше, чтобы точно не резалось */
+  color: var(--forest-700);
 }
-.gift-btn:hover{transform: translateY(-2px)}
-.gift-btn:active{transform: translateY(0)}
-.gift-btn img{display:block; width:min(280px, 60vw); height:auto}
+
+/* Кнопка подарка: убрал фон, рамку; PNG со свечением и мягкими ховерами */
+.gift-btn{
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.gift-btn img{
+  display:block;
+  width:min(300px, 60vw);
+  height:auto;
+  /* белое «свечение» вокруг PNG */
+  filter:
+    drop-shadow(0 8px 18px rgba(255,255,255,.65))
+    drop-shadow(0 0 32px rgba(255,255,255,.55))
+    drop-shadow(0 0 56px rgba(255,220,120,.35));
+  transition: transform .18s var(--ease-smooth), filter .18s var(--ease-smooth);
+}
+.gift-btn:hover img{ transform: translateY(-2px) scale(1.02) }
+.gift-btn:active img{ transform: translateY(0) scale(1.00) }

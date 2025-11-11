@@ -1,8 +1,8 @@
-// Простейший клиент к бэкенду
+// Заглушка клиента API — оставлен для будущей интеграции
 const BASE = (window.MYGARDEN_API_BASE || "").replace(/\/+$/,"");
 
 async function api(path, opts={}) {
-  if (!BASE) return null; // фронт работает и без бэка
+  if (!BASE) return null;
   const res = await fetch(`${BASE}${path}`, {
     headers: {"Content-Type":"application/json"},
     ...opts

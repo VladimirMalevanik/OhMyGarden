@@ -6,8 +6,10 @@
   <meta name="theme-color" content="#f0f7e6"/>
   <title>MyGarden — преврати рутину в игру</title>
 
+  <!-- Telegram Mini App SDK (может отсутствовать вне ТГ, всё работает) -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+  <!-- Стили -->
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
@@ -17,13 +19,14 @@
   </script>
 </head>
 <body>
-  <!-- фон: твоя картинка -->
+  <!-- Фон: чёткая картинка + мягкий блюр-слой сверху -->
   <div class="bg">
     <div class="bg-image" aria-hidden="true"></div>
+    <div class="bg-blur" aria-hidden="true"></div>
     <div class="bg-tint" aria-hidden="true"></div>
   </div>
 
-  <!-- сцена со слайдами -->
+  <!-- Сцена со слайдами -->
   <main id="root" class="stage">
     <!-- Слайд 1 -->
     <section class="slide slide--active" id="slide-hello" aria-label="Онбординг">
@@ -55,12 +58,14 @@
       </div>
     </section>
 
-    <!-- Слайд 3 — подарок (без конфетти) -->
+    <!-- Слайд 3 — подарок -->
     <section class="slide" id="slide-reward" aria-label="Подарок">
       <div class="card card-reward">
         <h2 class="reward-title">
           Супер! Самое сложное в любом деле — это начать, ты с этим справился. Вот твой подарок!
         </h2>
+
+        <!-- Кнопка без фона/рамки, PNG сверху со свечением -->
         <button id="giftBtn" class="gift-btn" type="button" aria-label="Открыть подарок">
           <img src="assets/img/gift.png" alt="Подарок" />
         </button>
@@ -68,6 +73,7 @@
     </section>
   </main>
 
+  <!-- Скрипты -->
   <script type="module" src="assets/js/telegram.js"></script>
   <script type="module" src="assets/js/api.js"></script>
   <script type="module" src="assets/js/app.js"></script>
