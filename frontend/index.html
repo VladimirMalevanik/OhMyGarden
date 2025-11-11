@@ -11,9 +11,7 @@
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <script>
-    window.MYGARDEN_API_BASE = "";
-  </script>
+  <script>window.MYGARDEN_API_BASE = "";</script>
 </head>
 <body>
   <!-- Фон: чёткая картинка + мягкий блюр-слой сверху -->
@@ -23,11 +21,10 @@
     <div class="bg-tint" aria-hidden="true"></div>
   </div>
 
-  <!-- Сцена со слайдами -->
   <main id="root" class="stage">
     <!-- Слайд 1 -->
-    <section class="slide slide--active" id="slide-hello" aria-label="Онбординг">
-      <div class="card card-intro" role="dialog" aria-modal="true">
+    <section class="slide slide--active" id="slide-hello">
+      <div class="card card-intro">
         <h1 class="tagline">Преврати рутину в игру.</h1>
         <button id="startBtn" class="btn btn-primary" type="button">
           <span class="btn-label">Начать</span>
@@ -37,32 +34,28 @@
     </section>
 
     <!-- Слайд 2 — цели -->
-    <section class="slide" id="slide-goals" aria-label="Цели на год">
+    <section class="slide" id="slide-goals">
       <div class="card card-form">
         <h2 class="card-title">Начнем с глобального: какие твои цели на этот год?</h2>
-
         <ol id="goalsList" class="goals">
           <li class="goal-row">
             <span class="num">1.</span>
             <input class="goal-input" type="text" placeholder="Опиши первую цель..." maxlength="160" />
           </li>
         </ol>
-
         <div class="form-actions">
-          <button id="addGoal" class="btn btn-ghost" type="button" aria-label="Добавить цель">＋Ещё цель</button>
+          <button id="addGoal" class="btn btn-ghost" type="button">＋Ещё цель</button>
           <button id="nextBtn" class="btn btn-accent" type="button" disabled>Продолжить</button>
         </div>
       </div>
     </section>
 
     <!-- Слайд 3 — подарок -->
-    <section class="slide" id="slide-reward" aria-label="Подарок">
+    <section class="slide" id="slide-reward">
       <div class="card card-reward">
         <h2 class="reward-title">
           Супер! Самое сложное в любом деле — это начать, ты с этим справился. Вот твой подарок!
         </h2>
-
-        <!-- Свечение под подарком (не кликается) + сам подарок (кликабелен) -->
         <div class="gift-wrap">
           <img class="gift-glow" src="assets/img/gift-glow.png" alt="" aria-hidden="true">
           <button id="giftBtn" class="gift-btn" type="button" aria-label="Открыть подарок">
@@ -72,24 +65,22 @@
       </div>
     </section>
 
-    <!-- Слайд 4 — раскрытие подарка (карточки исчезают) -->
-    <section class="slide" id="slide-reveal" aria-label="Раскрытие подарка">
+    <!-- Слайд 4 — раскрытие подарка -->
+    <section class="slide" id="slide-reveal">
       <div class="reveal">
         <h2 class="reveal-title">Что за... Какой-то сорняк?!</h2>
-
-        <!-- Слой для твоего PNG/«видео» конфетти (можно заменить на <video>) -->
         <img id="confettiOverlay" class="confetti-overlay" src="assets/img/confetti-overlay.png" alt="" aria-hidden="true"/>
-
         <img class="gift-opened" src="assets/img/gift-opened.png" alt="Открытый подарок" />
+        <p class="tap-hint"></p>
       </div>
     </section>
 
-    <!-- Слайд 5 — новая локация (поляна + дедушка с баблом) -->
-    <section class="slide" id="slide-scene" aria-label="Новая локация">
+    <!-- Слайд 5 — сцена с дедушкой и баблом -->
+    <section class="slide" id="slide-scene">
       <div class="scene">
-        <img class="grandpa" src="assets/img/grandpa.png" alt="Садовник"/>
+        <img id="grandpaImg" class="grandpa" src="assets/img/grandpa.png" alt="Садовник"/>
         <div class="speech">
-          <div class="speech-bubble">
+          <div id="speechBubble" class="speech-bubble">
             Это не сорняк, а росток — символ твоей дисциплины.
           </div>
         </div>
